@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Задачи на день</title>
+</head>
+<body>
+    <h1>Добавить задачу</h1>
+    <input type="text" id="taskInput" placeholder="Введите задачу">
+    <input type="button" id="addButton" value="Добавить">
+    <ul id="taskList"></ul>
+
+    <script>
+        const taskInput = document.getElementById('taskInput');
+        const addButton = document.getElementById('addButton');
+        const taskList = document.getElementById('taskList');
+
+        addButton.disabled = true;
+        taskInput.addEventListener("input", function() {
+            addButton.disabled = !this.value.trim();
+        });
+
+        addButton.addEventListener('click', function() {
+            const text = taskInput.value.trim();
+            if (text !== '') {
+                const task = document.createElement("li");
+                task.className = 'task';
+
+                const taskName = document.createElement('span');
+                taskName.className = 'task-name';
+                taskName.textContent = text;
+
+                const checkBox = document.createElement("input");
+                checkBox.type = 'checkbox';
+                checkBox.addEventListener("change", function() {
+                    if (this.checked) {
+                        taskName.classList.add("completed");
+                    } else {
+                        taskName.classList.remove("completed");
+                    }
+                });
+
+                task.appendChild(checkBox);
+                task.appendChild(taskName);
+                taskList.appendChild(task);
+
+                taskInput.value = '';
+                addButton.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
